@@ -1,0 +1,4 @@
+version: '3'
+services:
+  kafka:
+    image: bitnamilegacy/kafka:2.8.1
