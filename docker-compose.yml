@@ -16,6 +16,8 @@ services:
         extends:
             file: docker-compose.base.yml
             service: redis
+        volumes:
+            - redis-data:/data
     clickhouse:
         #
         # Note: please keep the default version in sync across
@@ -103,6 +105,8 @@ services:
             - '443:443'
         volumes:
             - ./Caddyfile:/etc/caddy/Caddyfile
+            - caddy-data:/data
+            - caddy-config:/config
         depends_on:
             - web
     object_storage:
@@ -124,9 +128,12 @@ services:
             SECRET_KEY: $POSTHOG_SECRET
 
 volumes:
+    redis-data:
     zookeeper-data:
     zookeeper-datalog:
     zookeeper-logs:
     object_storage:
     postgres-data:
     clickhouse-data:
+    caddy-data:
+    caddy-config:

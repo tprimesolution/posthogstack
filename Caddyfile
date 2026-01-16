@@ -5,3 +5,12 @@ http://posthog.ops.finarkein.in {
         header_up Host {host}
     }
 }
+
+# Catch-all for IP access and any other host
+:80 {
+    reverse_proxy web:8000 {
+        header_up X-Forwarded-Proto {scheme}
+        header_up X-Forwarded-Host {host}
+        header_up Host {host}
+    }
+}
