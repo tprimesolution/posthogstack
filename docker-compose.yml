@@ -51,11 +51,16 @@ services:
         extends:
             file: docker-compose.base.yml
             service: worker
+
+        image: posthog/posthog:$POSTHOG_APP_TAG
         environment:
             SENTRY_DSN: $SENTRY_DSN
             SITE_URL: https://$DOMAIN
             SECRET_KEY: $POSTHOG_SECRET
-        image: posthog/posthog:$POSTHOG_APP_TAG
+            TRUSTED_PROXIES: '*'
+            SECURE_COOKIES: "false"
+            SESSION_COOKIE_SECURE: "false"
+            CSRF_COOKIE_SECURE: "false"
     web:
         extends:
             file: docker-compose.base.yml
@@ -67,6 +72,11 @@ services:
             SENTRY_DSN: $SENTRY_DSN
             SITE_URL: https://$DOMAIN
             SECRET_KEY: $POSTHOG_SECRET
+            TRUSTED_PROXIES: '*'
+            CSRF_TRUSTED_ORIGINS: https://$DOMAIN,http://$DOMAIN
+            SECURE_COOKIES: "false"
+            SESSION_COOKIE_SECURE: "false"
+            CSRF_COOKIE_SECURE: "false"
     plugins:
         extends:
             file: docker-compose.base.yml
